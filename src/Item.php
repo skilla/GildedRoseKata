@@ -1,5 +1,7 @@
 <?php
 
+namespace GildedRose;
+
 class Item {
 
 	var $name;
@@ -7,8 +9,8 @@ class Item {
 	var $quality;
 
 	public function __construct(
-		$name, 
-		$sellIn, 
+		$name,
+		$sellIn,
 		$quality
 	) {
 		$this->setName($name);
@@ -50,5 +52,3 @@ class Item {
 	}
 
 }
-
-?>

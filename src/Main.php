@@ -1,6 +1,6 @@
 <?php
 
-require_once 'src/GildedRose.php';
+namespace GildedRose;
 
 $items = array();
 
@@ -16,5 +16,3 @@ GildedRose::updateQuality($items);
 foreach ($items as $item) {
 	echo "Item: {$item->name}, Quality: {$item->quality}, SellIn: {$item->sellIn}\n";
 }
-
-?>

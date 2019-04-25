@@ -1,5 +1,9 @@
 <?php
 
+namespace GildedRose\Tests;
+
+use GildedRose\Item;
+
 class ItemBuilder {
 
 	var $name;
@@ -49,5 +53,3 @@ class ItemBuilder {
 	}
 
 }
-
-?>

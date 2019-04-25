@@ -1,9 +1,11 @@
 <?php
 
-include_once 'src/GildedRose.php';
-include_once 'test/ItemBuilder.php';
+namespace GildedRose\Tests;
 
-class GildedRoseTest extends PHPUnit_Framework_TestCase {
+use GildedRose\GildedRose;
+use PHPUnit\Framework\TestCase;
+
+class GildedRoseTest extends TestCase {
 
 	public function test_items_degradan_calidad(
 	) {
@@ -82,7 +84,7 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider backstage_rules
 	 */
 	public function test_backstage_passes_incrementan_calidad_cada_vez_mas(
-		$sellIn, 
+		$sellIn,
 		$quality,
 		$expected
 	) {
@@ -96,5 +98,3 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
 	}
 
 }
-
-?>

@@ -1,0 +1,35 @@
+{
+    "name": "skilla/gilded-rose-kata",
+    "description": "Kata para la práctica de técnicas de refactoring",
+    "type": "project",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.1",
+        "phpmetrics/phpmetrics": "^2.4"
+    },
+    "license": "GNU",
+    "authors": [
+        {
+            "name": "Sergio Zambrano",
+            "email": "sergio.zambrano@enalquiler.com"
+        }
+    ],
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "GildedRose\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GildedRose\\Tests\\": ["tests"]
+        }
+    },
+    "scripts": {
+        "test": "bin/phpunit -c phpunit.xml --testdox --log-junit junit.xml",
+        "metrics": "bin/phpmetrics --junit=junit.xml --report-html=report src/ tests/; /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome report/index.html"
+    }
+}
