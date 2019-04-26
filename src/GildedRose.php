@@ -27,10 +27,9 @@ class GildedRose
             if (self::isAgedBrie($item)) {
                 self::increaseQulityIfNotMaximumQuality($item);
                 self::decreaseSellIn($item);
-                if (!self::isUnderMinimumSellIn($item)) {
-                    continue;
+                if (self::isUnderMinimumSellIn($item)) {
+                    self::increaseQulityIfNotMaximumQuality($item);
                 }
-                self::increaseQulityIfNotMaximumQuality($item);
                 continue;
             }
 
@@ -43,10 +42,9 @@ class GildedRose
                     self::increaseQulityIfNotMaximumQuality($item);
                 }
                 self::decreaseSellIn($item);
-                if (!self::isUnderMinimumSellIn($item)) {
-                    continue;
+                if (self::isUnderMinimumSellIn($item)) {
+                    self::setMinimumQuality($item);
                 }
-                self::setMinimumQuality($item);
                 continue;
             }
 
