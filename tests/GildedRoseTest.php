@@ -3,6 +3,7 @@
 namespace GildedRose\Tests;
 
 use GildedRose\GildedRose;
+use GildedRose\Items\AgedBrie;
 use GildedRose\Items\Sulfuras;
 use PHPUnit\Framework\TestCase;
 
@@ -38,22 +39,16 @@ class GildedRoseTest extends TestCase
 
     public function test_aged_brie_incrementa_calidad()
     {
-        $agedBrie = ItemBuilder::newItem()
-            ->withName("Aged Brie")
-            ->withQuality(5)
-            ->build();
-        GildedRose::updateQuality(array($agedBrie));
-        $this->assertEquals(6, $agedBrie->quality);
+        $items[0] = new AgedBrie(10, 5);
+        GildedRose::updateQuality($items);
+        $this->assertEquals(6, $items[0]->quality());
     }
 
     public function test_calidad_nunca_mayor_de_50()
     {
-        $agedBrie = ItemBuilder::newItem()
-            ->withName("Aged Brie")
-            ->withQuality(50)
-            ->build();
-        GildedRose::updateQuality(array($agedBrie));
-        $this->assertEquals(50, $agedBrie->quality);
+        $items[0] = new AgedBrie(10, 50);
+        GildedRose::updateQuality($items);
+        $this->assertEquals(50, $items[0]->quality());
     }
 
     public function test_sulfuras_no_cambia()

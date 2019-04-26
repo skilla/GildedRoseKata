@@ -22,16 +22,7 @@ class GildedRose
         foreach ($items as $key => $item) {
 
             if ($item instanceof NewItem) {
-                $items[$key] = $item->spendADay();
-                continue;
-            }
-
-            if (self::isAgedBrie($item)) {
-                self::increaseQulityIfNotMaximumQuality($item);
-                self::decreaseSellIn($item);
-                if (self::isUnderMinimumSellIn($item)) {
-                    self::increaseQulityIfNotMaximumQuality($item);
-                }
+                $item->spendADay();
                 continue;
             }
 
