@@ -45,10 +45,7 @@ class GildedRose
             }
 
             if (self::isAgedBrie($item)) {
-                if (self::hasMaximumQuality($item)) {
-                    continue;
-                }
-                self::increaseQuality($item);
+                self::increaseQulityIfNotMaximumQuality($item);
                 continue;
             }
 
