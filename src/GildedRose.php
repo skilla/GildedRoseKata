@@ -19,8 +19,7 @@ class GildedRose {
     public static function updateQuality(
 		$items
 	) {
-		for ($i = 0; $i < count($items); $i++) {
-            $item = $items[$i];
+		foreach ($items as $item) {
             if (!self::isAgedBrie($item) && !self::isBackStage($item)) {
 				if (self::hasQuality($item)) {
 					if (!self::isSulfuras($item)) {
