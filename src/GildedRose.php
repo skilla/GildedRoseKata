@@ -42,18 +42,19 @@ class GildedRose
                 if (self::isBackStageInSecondDecreaseLimit($item)) {
                     self::increaseQulityIfNotMaximumQuality($item);
                 }
-            } else {
-                self::decreaseQualityIfHasQuality($item);
+                self::decreaseSellIn($item);
+                if (!self::isUnderMinimumSellIn($item)) {
+                    continue;
+                }
+                self::setMinimumQuality($item);
+                continue;
             }
+
+            self::decreaseQualityIfHasQuality($item);
 
             self::decreaseSellIn($item);
 
             if (!self::isUnderMinimumSellIn($item)) {
-                continue;
-            }
-
-            if (self::isBackStage($item)) {
-                self::setMinimumQuality($item);
                 continue;
             }
 
