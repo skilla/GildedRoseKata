@@ -2,6 +2,8 @@
 
 namespace GildedRose;
 
+use GildedRose\Items\NewItem;
+
 class GildedRose
 {
     const MINIMUM_DECREASE_QUALITY = 1;
@@ -14,13 +16,13 @@ class GildedRose
     const SECOND_BACKSTAGE_LIMIT = 6;
     const AGED_BRIE = "Aged Brie";
     const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
-    const SULFURAS = "Sulfuras, Hand of Ragnaros";
 
     public static function updateQuality($items)
     {
-        foreach ($items as $item) {
+        foreach ($items as $key => $item) {
 
-            if (self::isSulfuras($item)) {
+            if ($item instanceof NewItem) {
+                $items[$key] = $item->spendADay();
                 continue;
             }
 
@@ -85,15 +87,6 @@ class GildedRose
     private static function hasQuality($item)
     {
         return $item->getQuality() > self::MINIMUM_QUALITY;
-    }
-
-    /**
-     * @param $item
-     * @return bool
-     */
-    private static function isSulfuras($item)
-    {
-        return self::SULFURAS === $item->getName();
     }
 
     /**
