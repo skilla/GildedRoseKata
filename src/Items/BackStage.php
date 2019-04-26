@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace GildedRose\Items;
 
+use GildedRose\Item;
+
 class BackStage extends NewItem
 {
     const FIRST_BACKSTAGE_LIMIT = 11;
     const SECOND_BACKSTAGE_LIMIT = 6;
     const NAME = "Backstage passes to a TAFKAL80ETC concert";
 
-    public function spendADay()
+    public function spendADay(): void
     {
         $item = $this->item;
         $this->increaseQualityIfNotMaximumQuality($item);
@@ -30,7 +32,7 @@ class BackStage extends NewItem
      * @param $item
      * @return bool
      */
-    private function isBackStageInFirstDecreaseLimit($item)
+    private function isBackStageInFirstDecreaseLimit(Item $item): bool
     {
         return $item->getSellIn() < self::FIRST_BACKSTAGE_LIMIT;
     }
@@ -39,7 +41,7 @@ class BackStage extends NewItem
      * @param $item
      * @return bool
      */
-    private function isBackStageInSecondDecreaseLimit($item)
+    private function isBackStageInSecondDecreaseLimit(Item $item): bool
     {
         return $item->getSellIn() < self::SECOND_BACKSTAGE_LIMIT;
     }

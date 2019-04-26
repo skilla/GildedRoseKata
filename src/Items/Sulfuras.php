@@ -8,8 +8,7 @@ class Sulfuras extends NewItem
 {
     const NAME = "Sulfuras, Hand of Ragnaros";
 
-    public function spendADay()
+    public function spendADay(): void
     {
-        return new static($this->item->getQuality(), $this->item->getSellIn());
     }
 }

@@ -8,7 +8,7 @@ class AgedBrie extends NewItem
 {
     const NAME = "Aged Brie";
 
-    public function spendADay()
+    public function spendADay(): void
     {
         $item = $this->item;
         $this->increaseQualityIfNotMaximumQuality($item);
@@ -16,7 +16,5 @@ class AgedBrie extends NewItem
         if ($this->isUnderMinimumSellIn($item)) {
             $this->increaseQualityIfNotMaximumQuality($item);
         }
-
-        return new static($item->getQuality(), $item->getSellIn());
     }
 }

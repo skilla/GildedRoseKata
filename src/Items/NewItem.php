@@ -29,7 +29,7 @@ abstract class NewItem
         return clone($this->item);
     }
 
-    final public function __toString()
+    final public function __toString(): string
     {
         return "Item: {$this->item->name}, Quality: {$this->item->quality}, SellIn: {$this->item->sellIn}";
     }
@@ -49,7 +49,7 @@ abstract class NewItem
         return $this->item->getQuality();
     }
 
-    public function spendADay()
+    public function spendADay(): void
     {
         $item = $this->item;
         self::decreaseQualityIfHasQuality($item);
@@ -63,63 +63,52 @@ abstract class NewItem
         self::decreaseQualityIfHasQuality($item);
     }
 
-    final protected function increaseQualityIfNotMaximumQuality(Item $item)
+    final protected function increaseQualityIfNotMaximumQuality(Item $item): void
     {
-        if (!self::hasMaximumQuality($item)) {
-            self::increaseQuality($item);
+        if (self::hasMaximumQuality($item)) {
+            return;
         }
+        self::increaseQuality($item);
     }
 
-    /**
-     * @param $item
-     * @return bool
-     */
-    final protected function hasMaximumQuality(Item $item)
+    final protected function hasMaximumQuality(Item $item): bool
     {
         return $item->getQuality() >= self::MAXIMUM_QUALITY;
     }
 
-    final protected function increaseQuality(Item $item)
+    final protected function increaseQuality(Item $item): void
     {
         $item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
     }
 
-    final protected function decreaseSellIn(Item $item)
+    final protected function decreaseSellIn(Item $item): void
     {
         $item->setSellIn($item->getSellIn() - self::MINIMUM_DECREASE_SELL_IN);
     }
 
-    /**
-     * @param $item
-     * @return bool
-     */
-    final protected function isUnderMinimumSellIn(Item $item)
+    final protected function isUnderMinimumSellIn(Item $item): bool
     {
         return $item->getSellIn() < self::MINIMUM_SELL_IN;
     }
 
-    final protected function setMinimumQuality(Item $item)
+    final protected function setMinimumQuality(Item $item): void
     {
-        $item->setQuality($item->getQuality() - $item->getQuality());
+        $item->setQuality(self::MINIMUM_SELL_IN);
     }
 
-    final protected function decreaseQualityIfHasQuality(Item $item)
+    final protected function decreaseQualityIfHasQuality(Item $item): void
     {
         if ($this->hasQuality($item)) {
             $this->decreaseQuality($item);
         }
     }
 
-    /**
-     * @param $item
-     * @return bool
-     */
-    final protected function hasQuality(Item $item)
+    final protected function hasQuality(Item $item): bool
     {
         return $item->getQuality() > self::MINIMUM_QUALITY;
     }
 
-    final protected function decreaseQuality(Item $item)
+    final protected function decreaseQuality(Item $item): void
     {
         $item->setQuality($item->getQuality() - self::MINIMUM_DECREASE_QUALITY);
     }
