@@ -49,6 +49,20 @@ abstract class NewItem
         return $this->item->getQuality();
     }
 
+    public function spendADay()
+    {
+        $item = $this->item;
+        self::decreaseQualityIfHasQuality($item);
+
+        self::decreaseSellIn($item);
+
+        if (!self::isUnderMinimumSellIn($item)) {
+            return;
+        }
+
+        self::decreaseQualityIfHasQuality($item);
+    }
+
     final protected function increaseQualityIfNotMaximumQuality(Item $item)
     {
         if (!self::hasMaximumQuality($item)) {
@@ -65,19 +79,11 @@ abstract class NewItem
         return $item->getQuality() >= self::MAXIMUM_QUALITY;
     }
 
-    /**
-     * @param $item
-     * @return mixed
-     */
     final protected function increaseQuality(Item $item)
     {
         $item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
     }
 
-    /**
-     * @param $item
-     * @return mixed
-     */
     final protected function decreaseSellIn(Item $item)
     {
         $item->setSellIn($item->getSellIn() - self::MINIMUM_DECREASE_SELL_IN);
@@ -92,5 +98,29 @@ abstract class NewItem
         return $item->getSellIn() < self::MINIMUM_SELL_IN;
     }
 
-    public abstract function spendADay();
+    final protected function setMinimumQuality(Item $item)
+    {
+        $item->setQuality($item->getQuality() - $item->getQuality());
+    }
+
+    final protected function decreaseQualityIfHasQuality(Item $item)
+    {
+        if ($this->hasQuality($item)) {
+            $this->decreaseQuality($item);
+        }
+    }
+
+    /**
+     * @param $item
+     * @return bool
+     */
+    final protected function hasQuality(Item $item)
+    {
+        return $item->getQuality() > self::MINIMUM_QUALITY;
+    }
+
+    final protected function decreaseQuality(Item $item)
+    {
+        $item->setQuality($item->getQuality() - self::MINIMUM_DECREASE_QUALITY);
+    }
 }

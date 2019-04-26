@@ -4,6 +4,10 @@ namespace GildedRose\Tests;
 
 use GildedRose\GildedRose;
 use GildedRose\Items\AgedBrie;
+use GildedRose\Items\BackStage;
+use GildedRose\Items\Conjured;
+use GildedRose\Items\Dexterity;
+use GildedRose\Items\Elixir;
 use GildedRose\Items\Sulfuras;
 use PHPUnit\Framework\TestCase;
 
@@ -11,30 +15,23 @@ class GildedRoseTest extends TestCase
 {
     public function test_items_degradan_calidad()
     {
-        $unItem = ItemBuilder::newItem()
-            ->withQuality(5)
-            ->build();
-        GildedRose::updateQuality(array($unItem));
-        $this->assertEquals(4, $unItem->quality);
+        $items[0] = new Conjured(10, 5);
+        GildedRose::updateQuality($items);
+        $this->assertEquals(4, $items[0]->quality());
     }
 
     public function test_venta_pasada_calidad_degrada_doble()
     {
-        $unItem = ItemBuilder::newItem()
-            ->withSellIn(-1)
-            ->withQuality(5)
-            ->build();
-        GildedRose::updateQuality(array($unItem));
-        $this->assertEquals(3, $unItem->quality);
+        $items[0] = new Elixir(-1, 5);
+        GildedRose::updateQuality($items);
+        $this->assertEquals(3, $items[0]->quality());
     }
 
     public function test_calidad_nunca_negativa()
     {
-        $unItem = ItemBuilder::newItem()
-            ->withQuality(0)
-            ->build();
-        GildedRose::updateQuality(array($unItem));
-        $this->assertEquals(0, $unItem->quality);
+        $items[0] = new Dexterity(10, 0);
+        GildedRose::updateQuality($items);
+        $this->assertEquals(0, $items[0]->quality());
     }
 
     public function test_aged_brie_incrementa_calidad()
@@ -53,10 +50,10 @@ class GildedRoseTest extends TestCase
 
     public function test_sulfuras_no_cambia()
     {
-        $sulfuras = new Sulfuras(10, 10);
-        GildedRose::updateQuality(array($sulfuras));
-        $this->assertEquals(10, $sulfuras->sellIn());
-        $this->assertEquals(10, $sulfuras->quality());
+        $items[0] = new Sulfuras(10, 10);
+        GildedRose::updateQuality($items);
+        $this->assertEquals(10, $items[0]->sellIn());
+        $this->assertEquals(10, $items[0]->quality());
     }
 
     public static function backstage_rules()
@@ -80,12 +77,8 @@ class GildedRoseTest extends TestCase
         $quality,
         $expected
     ) {
-        $pass = ItemBuilder::newItem()
-            ->withName("Backstage passes to a TAFKAL80ETC concert")
-            ->withSellIn($sellIn)
-            ->withQuality($quality)
-            ->build();
-        GildedRose::updateQuality(array($pass));
-        $this->assertEquals($expected, $pass->quality);
+        $items[0] = new BackStage($sellIn, $quality);
+        GildedRose::updateQuality($items);
+        $this->assertEquals($expected, $items[0]->quality());
     }
 }
