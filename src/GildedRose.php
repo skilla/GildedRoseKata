@@ -2,8 +2,8 @@
 
 namespace GildedRose;
 
-class GildedRose {
-
+class GildedRose
+{
     const MINIMUM_DECREASE_QUALITY = 1;
     const MINIMUM_INCREASE_QUALITY = 1;
     const MINIMUM_QUALITY = 0;
@@ -16,32 +16,25 @@ class GildedRose {
     const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
     const SULFURAS = "Sulfuras, Hand of Ragnaros";
 
-    public static function updateQuality(
-		$items
-	) {
+    public static function updateQuality($items)
+    {
 		foreach ($items as $item) {
             if (self::isAgedBrie($item) || self::isBackStage($item)) {
 				if (!self::hasMaximumQuality($item)) {
 					self::increaseQuality($item);
 					if (self::isBackStage($item)) {
 						if (self::isBackStageInFirstDecreaseLimit($item)) {
-							if (!self::hasMaximumQuality($item)) {
-								self::increaseQuality($item);
-							}
-						}
+                            self::increaseQulityIfNotMaximumQuality($item);
+                        }
 						if (self::isBackStageInSecondDecreaseLimit($item)) {
-							if (!self::hasMaximumQuality($item)) {
-								self::increaseQuality($item);
-							}
+                            self::increaseQulityIfNotMaximumQuality($item);
 						}
 					}
 				}
 			} else {
-				if (self::hasQuality($item)) {
-					if (!self::isSulfuras($item)) {
-						self::decreaseQuality($item);
-					}
-				}
+                if (!self::isSulfuras($item)) {
+                    self::decreaseQualityIfHasQuality($item);
+                }
 			}
 
 			if (!self::isSulfuras($item)) {
@@ -65,10 +58,8 @@ class GildedRose {
                 continue;
             }
 
-            if (self::hasQuality($item)) {
-                if (!self::isSulfuras($item)) {
-                    self::decreaseQuality($item);
-                }
+            if (!self::isSulfuras($item)) {
+                self::decreaseQualityIfHasQuality($item);
             }
 		}
 	}
@@ -179,5 +170,25 @@ class GildedRose {
     private static function setMinimumQuality($item)
     {
         return $item->setQuality($item->getQuality() - $item->getQuality());
+    }
+
+    /**
+     * @param $item
+     */
+    private static function decreaseQualityIfHasQuality($item)
+    {
+        if (self::hasQuality($item)) {
+            self::decreaseQuality($item);
+        }
+    }
+
+    /**
+     * @param $item
+     */
+    private static function increaseQulityIfNotMaximumQuality($item)
+    {
+        if (!self::hasMaximumQuality($item)) {
+            self::increaseQuality($item);
+        }
     }
 }
