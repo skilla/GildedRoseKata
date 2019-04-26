@@ -20,13 +20,7 @@ class GildedRose {
 		$items
 	) {
 		foreach ($items as $item) {
-            if (!self::isAgedBrie($item) && !self::isBackStage($item)) {
-				if (self::hasQuality($item)) {
-					if (!self::isSulfuras($item)) {
-						self::decreaseQuality($item);
-					}
-				}
-			} else {
+            if (self::isAgedBrie($item) || self::isBackStage($item)) {
 				if (!self::hasMaximumQuality($item)) {
 					self::increaseQuality($item);
 					if (self::isBackStage($item)) {
@@ -42,29 +36,40 @@ class GildedRose {
 						}
 					}
 				}
+			} else {
+				if (self::hasQuality($item)) {
+					if (!self::isSulfuras($item)) {
+						self::decreaseQuality($item);
+					}
+				}
 			}
 
 			if (!self::isSulfuras($item)) {
 				self::decreaseSellIn($item);
 			}
 
-			if (self::isUnderMinimumSellIn($item)) {
-				if (!self::isAgedBrie($item)) {
-					if (!self::isBackStage($item)) {
-						if (self::hasQuality($item)) {
-							if (!self::isSulfuras($item)) {
-								self::decreaseQuality($item);
-							}
-						}
-					} else {
-						self::setMinimumQuality($item);
-					}
-				} else {
-					if (!self::hasMaximumQuality($item)) {
-						self::increaseQuality($item);
-					}
-				}
-			}
+			if (!self::isUnderMinimumSellIn($item)) {
+                continue;
+            }
+
+            if (self::isAgedBrie($item)) {
+                if (self::hasMaximumQuality($item)) {
+                    continue;
+                }
+                self::increaseQuality($item);
+                continue;
+            }
+
+            if (self::isBackStage($item)) {
+                self::setMinimumQuality($item);
+                continue;
+            }
+
+            if (self::hasQuality($item)) {
+                if (!self::isSulfuras($item)) {
+                    self::decreaseQuality($item);
+                }
+            }
 		}
 	}
 
