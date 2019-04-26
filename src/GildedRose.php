@@ -18,7 +18,7 @@ class GildedRose
 
     public static function updateQuality($items)
     {
-		foreach ($items as $item) {
+        foreach ($items as $item) {
             if (self::isAgedBrie($item)) {
                 self::increaseQulityIfNotMaximumQuality($item);
             } else if (self::isBackStage($item)) {
@@ -29,17 +29,17 @@ class GildedRose
                 if (self::isBackStageInSecondDecreaseLimit($item)) {
                     self::increaseQulityIfNotMaximumQuality($item);
                 }
-			} else {
+            } else {
                 if (!self::isSulfuras($item)) {
                     self::decreaseQualityIfHasQuality($item);
                 }
-			}
+            }
 
-			if (!self::isSulfuras($item)) {
-				self::decreaseSellIn($item);
-			}
+            if (!self::isSulfuras($item)) {
+                self::decreaseSellIn($item);
+            }
 
-			if (!self::isUnderMinimumSellIn($item)) {
+            if (!self::isUnderMinimumSellIn($item)) {
                 continue;
             }
 
@@ -59,8 +59,8 @@ class GildedRose
             if (!self::isSulfuras($item)) {
                 self::decreaseQualityIfHasQuality($item);
             }
-		}
-	}
+        }
+    }
 
     /**
      * @param $item
