@@ -26,7 +26,15 @@ class GildedRose
 
             if (self::isAgedBrie($item)) {
                 self::increaseQulityIfNotMaximumQuality($item);
-            } else if (self::isBackStage($item)) {
+                self::decreaseSellIn($item);
+                if (!self::isUnderMinimumSellIn($item)) {
+                    continue;
+                }
+                self::increaseQulityIfNotMaximumQuality($item);
+                continue;
+            }
+
+            if (self::isBackStage($item)) {
                 self::increaseQulityIfNotMaximumQuality($item);
                 if (self::isBackStageInFirstDecreaseLimit($item)) {
                     self::increaseQulityIfNotMaximumQuality($item);
@@ -41,11 +49,6 @@ class GildedRose
             self::decreaseSellIn($item);
 
             if (!self::isUnderMinimumSellIn($item)) {
-                continue;
-            }
-
-            if (self::isAgedBrie($item)) {
-                self::increaseQulityIfNotMaximumQuality($item);
                 continue;
             }
 
