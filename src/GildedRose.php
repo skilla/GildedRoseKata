@@ -23,21 +23,21 @@ class GildedRose {
             if (!self::isAgedBrie($item) && !self::isBackStage($item)) {
 				if (self::hasQuality($item)) {
 					if (!self::isSulfuras($item)) {
-						$item->setQuality($item->getQuality() - self::MINIMUM_DECREASE_QUALITY);
+						self::decreaseQuality($item);
 					}
 				}
 			} else {
 				if (!self::hasMaximumQuality($item)) {
-					$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+					self::increaseQuality($item);
 					if (self::isBackStage($item)) {
 						if (self::isBackStageInFirstDecreaseLimit($item)) {
 							if (!self::hasMaximumQuality($item)) {
-								$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+								self::increaseQuality($item);
 							}
 						}
 						if (self::isBackStageInSecondDecreaseLimit($item)) {
 							if (!self::hasMaximumQuality($item)) {
-								$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+								self::increaseQuality($item);
 							}
 						}
 					}
@@ -45,7 +45,7 @@ class GildedRose {
 			}
 
 			if (!self::isSulfuras($item)) {
-				$item->setSellIn($item->getSellIn() - self::MINIMUM_DECREASE_SELL_IN);
+				self::decreaseSellIn($item);
 			}
 
 			if (self::isUnderMinimumSellIn($item)) {
@@ -53,15 +53,15 @@ class GildedRose {
 					if (!self::isBackStage($item)) {
 						if (self::hasQuality($item)) {
 							if (!self::isSulfuras($item)) {
-								$item->setQuality($item->getQuality() - self::MINIMUM_DECREASE_QUALITY);
+								self::decreaseQuality($item);
 							}
 						}
 					} else {
-						$item->setQuality($item->getQuality() - $item->getQuality());
+						self::setMinimumQuality($item);
 					}
 				} else {
 					if (!self::hasMaximumQuality($item)) {
-						$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+						self::increaseQuality($item);
 					}
 				}
 			}
@@ -138,5 +138,41 @@ class GildedRose {
     private static function isUnderMinimumSellIn($item)
     {
         return $item->getSellIn() < self::MINIMUM_SELL_IN;
+    }
+
+    /**
+     * @param $item
+     * @return mixed
+     */
+    private static function decreaseQuality($item)
+    {
+        return $item->setQuality($item->getQuality() - self::MINIMUM_DECREASE_QUALITY);
+    }
+
+    /**
+     * @param $item
+     * @return mixed
+     */
+    private static function increaseQuality($item)
+    {
+        return $item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+    }
+
+    /**
+     * @param $item
+     * @return mixed
+     */
+    private static function decreaseSellIn($item)
+    {
+        return $item->setSellIn($item->getSellIn() - self::MINIMUM_DECREASE_SELL_IN);
+    }
+
+    /**
+     * @param $item
+     * @return mixed
+     */
+    private static function setMinimumQuality($item)
+    {
+        return $item->setQuality($item->getQuality() - $item->getQuality());
     }
 }
