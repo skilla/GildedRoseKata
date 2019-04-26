@@ -20,48 +20,49 @@ class GildedRose {
 		$items
 	) {
 		for ($i = 0; $i < count($items); $i++) {
-			if ((self::AGED_BRIE != $items[$i]->getName()) && (self::BACKSTAGE != $items[$i]->getName())) {
-				if ($items[$i]->getQuality() > self::MINIMUM_QUALITY) {
-					if (self::SULFURAS != $items[$i]->getName()) {
-						$items[$i]->setQuality($items[$i]->getQuality() - self::MINIMUM_DECREASE_QUALITY);
+            $item = $items[$i];
+            if ((self::AGED_BRIE != $item->getName()) && (self::BACKSTAGE != $item->getName())) {
+				if ($item->getQuality() > self::MINIMUM_QUALITY) {
+					if (self::SULFURAS != $item->getName()) {
+						$item->setQuality($item->getQuality() - self::MINIMUM_DECREASE_QUALITY);
 					}
 				}
 			} else {
-				if ($items[$i]->getQuality() < self::MAXIMUM_QUALITY) {
-					$items[$i]->setQuality($items[$i]->getQuality() + self::MINIMUM_INCREASE_QUALITY);
-					if (self::BACKSTAGE == $items[$i]->getName()) {
-						if ($items[$i]->getSellIn() < self::SECOND_BACKSTAGE_LIMIT) {
-							if ($items[$i]->getQuality() < self::MAXIMUM_QUALITY) {
-								$items[$i]->setQuality($items[$i]->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+				if ($item->getQuality() < self::MAXIMUM_QUALITY) {
+					$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+					if (self::BACKSTAGE == $item->getName()) {
+						if ($item->getSellIn() < self::SECOND_BACKSTAGE_LIMIT) {
+							if ($item->getQuality() < self::MAXIMUM_QUALITY) {
+								$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
 							}
 						}
-						if ($items[$i]->getSellIn() < self::FIRST_BACKSTAGE_LIMIT) {
-							if ($items[$i]->getQuality() < self::MAXIMUM_QUALITY) {
-								$items[$i]->setQuality($items[$i]->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+						if ($item->getSellIn() < self::FIRST_BACKSTAGE_LIMIT) {
+							if ($item->getQuality() < self::MAXIMUM_QUALITY) {
+								$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
 							}
 						}
 					}
 				}
 			}
 
-			if (self::SULFURAS != $items[$i]->getName()) {
-				$items[$i]->setSellIn($items[$i]->getSellIn() - self::MINIMUM_DECREASE_SELL_IN);
+			if (self::SULFURAS != $item->getName()) {
+				$item->setSellIn($item->getSellIn() - self::MINIMUM_DECREASE_SELL_IN);
 			}
 
-			if ($items[$i]->getSellIn() < self::MINIMUM_SELL_IN) {
-				if (self::AGED_BRIE != $items[$i]->getName()) {
-					if (self::BACKSTAGE != $items[$i]->getName()) {
-						if ($items[$i]->getQuality() > self::MINIMUM_QUALITY) {
-							if (self::SULFURAS != $items[$i]->getName()) {
-								$items[$i]->setQuality($items[$i]->getQuality() - self::MINIMUM_DECREASE_QUALITY);
+			if ($item->getSellIn() < self::MINIMUM_SELL_IN) {
+				if (self::AGED_BRIE != $item->getName()) {
+					if (self::BACKSTAGE != $item->getName()) {
+						if ($item->getQuality() > self::MINIMUM_QUALITY) {
+							if (self::SULFURAS != $item->getName()) {
+								$item->setQuality($item->getQuality() - self::MINIMUM_DECREASE_QUALITY);
 							}
 						}
 					} else {
-						$items[$i]->setQuality($items[$i]->getQuality() - $items[$i]->getQuality());
+						$item->setQuality($item->getQuality() - $item->getQuality());
 					}
 				} else {
-					if ($items[$i]->getQuality() < self::MAXIMUM_QUALITY) {
-						$items[$i]->setQuality($items[$i]->getQuality() + self::MINIMUM_INCREASE_QUALITY);
+					if ($item->getQuality() < self::MAXIMUM_QUALITY) {
+						$item->setQuality($item->getQuality() + self::MINIMUM_INCREASE_QUALITY);
 					}
 				}
 			}
