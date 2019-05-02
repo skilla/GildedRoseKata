@@ -30,6 +30,6 @@
     },
     "scripts": {
         "test": "bin/phpunit -c phpunit.xml --testdox --log-junit junit.xml",
-        "metrics": "bin/phpmetrics --junit=junit.xml --report-html=report src/ tests/; /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome report/index.html"
+        "metrics": "composer test; bin/phpmetrics --junit=junit.xml --report-html=report src/; /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome report/index.html"
     }
 }
